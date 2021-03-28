@@ -4,21 +4,28 @@
 // var pode usar em qualquer lugar
 // const não pode ser modificada
 
-let o = 15
-for(i=0; i<o; i++){
+
+
+
+let o = 980
+const vet = [];
+for(i=0; i<=o; i++){
 
 $.ajax({
 url: "https://pokeapi.co/api/v2/pokemon/"+i,
 type: "GET",
+async:false,
 success: function(pokemon){
-console.log(pokemon)
 
+    let type = pokemon.types.map(o=> o.type.name)
+    let dados =   "<li class='card  "+ type[0]+"'> <img class='card-image flying' alt='"+ pokemon.name +"'  src='"+ pokemon.sprites.front_default +"'> <h2 class='card-title'>"+"Nº" + pokemon.id + ". " +  pokemon.name +"</h2> <p class='card-subtitle'>"+ type.join(' | ') + "</p></li>";
+    vet.push(dados);
 
- $("#temosquepegar").append("<img align='center' src='"+pokemon.sprites.front_default+"'>" 
-  + "Nome: " + pokemon.name + " Tipo: " + pokemon.types[0].type.name  ) 
-  $("#temosquepegar").append("<img align='center' src='"+pokemon.sprites.back_default+"'>"  ) 
+},
 
-}
+ 
 });
-
-}
+ }
+ vet.forEach(o=>{
+     $(".pokedex").append(o);
+ })
